@@ -47,6 +47,7 @@ router
           title: course.title,
           description: course.description,
           estimatedTime: course.estimatedTime,
+          materialsNeeded: course.materialsNeeded,
           userId: course.userId,
           userFirstName: course.User.firstName,
           userLastName: course.User.lastName,

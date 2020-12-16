@@ -1,6 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState, useEffect } from 'react';
+// import logo from './logo.svg';
+// import './App.css';
+// import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +9,7 @@ import {
 
 import Header from './components/Header';
 import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
 
 function App () {
   return (
@@ -17,7 +18,8 @@ function App () {
         <Header />
 
         <Switch>
-          <Route path='/courses' component={Courses}></Route>
+          <Route exact path='/courses' component={Courses}></Route>
+          <Route path='/courses/:id' component={CourseDetail}></Route>
         </Switch>
       </div>
     </Router>
