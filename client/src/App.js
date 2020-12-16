@@ -10,6 +10,11 @@ import {
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import UserSignIn from './components/UserSignIn';
+import UserSignUp from './components/UserSIgnUp';
+import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
+import UserSignOut from './components/UserSignOut';
 
 function App () {
   return (
@@ -18,36 +23,17 @@ function App () {
         <Header />
 
         <Switch>
-          <Route exact path='/courses' component={Courses}></Route>
+          <Route exact path='/' component={Courses}></Route>
           <Route path='/courses/:id' component={CourseDetail}></Route>
+          <Route path='/signin' component={UserSignIn}></Route>
+          <Route path='/signup' component={UserSignUp}></Route>
+          <Route path='/courses/create' component={CreateCourse}></Route>
+          <Route path='/courses/:id/update' component={UpdateCourse}></Route>
+          <Route path='/signout' component={UserSignOut}></Route>
         </Switch>
       </div>
     </Router>
   );
 }
-// function App() {
-//   const [courses, setCourses ] = useState([]);
-
-//   useEffect(() => {
-//     fetch('http://127.0.0.1:5000/api/courses')
-//       .then(response => response.json())
-//       .then(data => {
-//         setCourses(data.filteredCoursesInfo); 
-//         console.log(data);
-//       });
-//   }, []);
-
-// // console.log(courses);
-//   const courseTitles = courses.map(course => <li>{course.course.title}</li>);
-
-//   return (
-//     <div className="App">
-//       <h1>hi</h1>
-//         <ul>
-//           {courseTitles}
-//         </ul>
-//     </div>
-//   );
-// }
 
 export default App;
