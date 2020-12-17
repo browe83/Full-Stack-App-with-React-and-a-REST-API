@@ -4,7 +4,6 @@ const { User } = require('../models');
 
 exports.authenticateUser = async (req, res, next) => {
   let message;
-  console.log('hit auth handler');
   const credentials = auth(req);
 
   if (credentials) {

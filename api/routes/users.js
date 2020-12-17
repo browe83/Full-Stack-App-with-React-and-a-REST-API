@@ -9,6 +9,7 @@ const { authenticateUser } = require('../middleware/auth-user');
 router
 // GET a current user.
   .get('/', authenticateUser, asyncHandler(async (req, res) => {
+    console.log('request obj:', req);
     res.status(200).json({
       user: {
         firstName: req.currentUser.firstName,
