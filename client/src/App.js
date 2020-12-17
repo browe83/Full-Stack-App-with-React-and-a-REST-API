@@ -16,12 +16,12 @@ import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import UserSignOut from './components/UserSignOut';
 
+
 function App () {
   return (
     <Router>
       <div>
-        <Header />
-
+          <Header />
         <Switch>
           <Route exact path='/' component={Courses}></Route>
           <Route path='/courses/:id' component={CourseDetail}></Route>

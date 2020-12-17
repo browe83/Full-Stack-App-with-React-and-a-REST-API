@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../Context';
 
 function Header (props) {
+    
     return (
     <div className="header">
         <div className="bounds">

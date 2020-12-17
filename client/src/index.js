@@ -4,10 +4,13 @@ import './index.css';
 import './global.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import UserContext, { value } from './Context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserContext.Provider value={value}>
+      <App />
+    </UserContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
