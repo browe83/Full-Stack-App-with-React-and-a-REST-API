@@ -29,7 +29,7 @@ function CourseDetail (props) {
         <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="/courses/delete">Delete Course</a></span><a
-                className="button button-secondary" href="/courses">Return to List</a></div>
+                className="button button-secondary" href="/">Return to List</a></div>
           </div>
         </div>
         <div className="bounds course--detail">

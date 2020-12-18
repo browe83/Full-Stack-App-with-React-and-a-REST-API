@@ -15,23 +15,24 @@ import UserSignUp from './components/UserSIgnUp';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import UserSignOut from './components/UserSignOut';
-
+import ContextProvider from './Context';
+import PrivateRoute from './components/PrivateRoute';
 
 function App () {
   return (
     <Router>
-      <div>
+      <ContextProvider>
           <Header />
         <Switch>
           <Route exact path='/' component={Courses}></Route>
-          <Route path='/courses/:id' component={CourseDetail}></Route>
-          <Route path='/signin' component={UserSignIn}></Route>
-          <Route path='/signup' component={UserSignUp}></Route>
-          <Route path='/courses/create' component={CreateCourse}></Route>
-          <Route path='/courses/:id/update' component={UpdateCourse}></Route>
-          <Route path='/signout' component={UserSignOut}></Route>
+          <PrivateRoute exact path='/courses/create' component={CreateCourse}></PrivateRoute>
+          <Route exact path='/courses/:id' component={CourseDetail}></Route>
+          <Route exact path='/signin' component={UserSignIn}></Route>
+          <Route exact path='/signup' component={UserSignUp}></Route>
+          <PrivateRoute exact path='/courses/:id/update' component={UpdateCourse}></PrivateRoute>
+          <Route exact path='/signout' component={UserSignOut}></Route>
         </Switch>
-      </div>
+      </ContextProvider>
     </Router>
   );
 }

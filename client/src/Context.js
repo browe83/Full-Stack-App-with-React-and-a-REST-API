@@ -1,42 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import base64 from 'base-64';
+import { useHistory } from "react-router-dom";
 
-const signIn = (emailAddress, password) => {
-    console.log('email:', emailAddress, 'password:', password);
-    fetch(`http://127.0.0.1:5000/api/users/`, {
-        headers: new Headers({
-            "Authorization": `Basic ${base64.encode(`${emailAddress}:${password}`)}`,
+export const Context = React.createContext();
+
+function ContextProvider (props) {
+    const [ authUser, setAuthUser ] = useState('');
+    const [ errors, setErrors ] = useState(null);
+    const history = useHistory();
+
+    const signIn = (emailAddress, password) => {
+        setErrors([]);
+        console.log('email:', emailAddress, 'password:', password);
+        fetch(`http://127.0.0.1:5000/api/users/`, {
+            headers: new Headers({
+                "Authorization": `Basic ${base64.encode(`${emailAddress}:${password}`)}`,
+            })
         })
-    })
-    .then (res => res.json())
-    .then(data => {
-        console.log(data);
-        if (data.message) {
-            value.errors.push('Incorrect username and/or password');
-            console.log(value.errors);
-        } else {
-            const { user } = data;
-            value.authUser = user;
-            value.authUser.password = password;
-            console.log('authUser:', value.authUser);
-        }
-    })
-}
-
-const signOut = () => {
-    console.log('sign out!')
-}
-
-export const value = {
-    authUser: null,
-    errors: [],
-    actions: {
-        signIn,
-        signOut,
+        .then (res => res.json())
+        .then(data => {
+        
+            if (data.message) {
+                setErrors(['Incorrect username and/or password.'])
+            } else {
+                const { user } = data;
+                setAuthUser({...user, password});
+                history.push('/');
+                console.log('successful log in');
+            }
+        })
     }
-    
-}
-const Context = React.createContext(value);
 
-export default Context;
+    useEffect(() => {
+        console.log(authUser)
+    }, [authUser])
+
+    const signOut = () => {
+        setAuthUser(null);
+    }
+
+    return (
+        <Context.Provider 
+            value={{
+                authUser,
+                errors,
+                actions: {
+                    signIn,
+                    signOut,
+                }
+            }}
+        >{props.children}
+        </Context.Provider>
+    )
+}
+
+
+
+export default ContextProvider;
 

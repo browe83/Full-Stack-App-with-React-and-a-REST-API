@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import UserContext from '../Context';
-
+import { Context }  from '../Context';
 function UserSignUp (props) {
  
- const context = useContext(UserContext);
+ const context = useContext(Context);
 
  return (
      <div className="bounds">
