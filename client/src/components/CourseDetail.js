@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 
 function CourseDetail (props) {
   const [course, setCourse] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
       fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`)
       .then(response => response.json())
       .then(({ course }) => {
-        setCourse(course);
-        console.log(course)
+        if (course === null || course === undefined) {
+          history.push('/error');
+        } else {
+          setCourse(course);
+          console.log(course)
+        }
       });
   }, [props.match.params.id])
 

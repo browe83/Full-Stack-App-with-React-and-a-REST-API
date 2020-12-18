@@ -17,6 +17,7 @@ import UpdateCourse from './components/UpdateCourse';
 import UserSignOut from './components/UserSignOut';
 import ContextProvider from './Context';
 import PrivateRoute from './components/PrivateRoute';
+import NotFound from './components/NotFound';
 
 function App () {
   return (
@@ -31,6 +32,7 @@ function App () {
           <Route exact path='/signup' component={UserSignUp}></Route>
           <PrivateRoute exact path='/courses/:id/update' component={UpdateCourse}></PrivateRoute>
           <Route exact path='/signout' component={UserSignOut}></Route>
+          <Route component={NotFound}></Route>
         </Switch>
       </ContextProvider>
     </Router>
