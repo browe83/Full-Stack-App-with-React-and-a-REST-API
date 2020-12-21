@@ -16,25 +16,13 @@ function CourseDetail (props) {
           console.log(course)
         }
       });
-  }, [props.match.params.id])
-
-  const materialsNeededList = () => {
-    let materials;
-    if (course.materialsNeeded === null) {
-      materials = "No materials required"
-    } else {
-      materials = course.materialsNeeded;
-      console.log('materials', materials);
-    }
-    return <li>{materials}</li>
-  }
-
+  }, [props.match.params.id, history])
 
   return (
     <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="/courses/delete">Delete Course</a></span><a
+            <div className="grid-100"><span><a className="button" href="courses/update">Update Course</a><a className="button" href="/courses/delete">Delete Course</a></span><a
                 className="button button-secondary" href="/">Return to List</a></div>
           </div>
         </div>
@@ -59,7 +47,6 @@ function CourseDetail (props) {
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    {/* {materialsNeededList()} */}
                     {course.materialsNeeded ? <li>{course.materialsNeeded}</li>  : <li>No materials required</li>}
                   </ul>
                 </li>

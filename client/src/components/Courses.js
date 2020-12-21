@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../Context';
 
 function Courses (props) {
   const [courses, setCourses ] = useState([]);
+  const context = useContext(Context);
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/courses')
       .then(response => response.json())
       .then(data => {
         setCourses(data.filteredCoursesInfo); 
-        console.log(data.filteredCoursesInfo);
+        console.log('courses authUser:', context.authUser, 'errors:', context.errors);
       });
-  }, []);
+  }, [context.authUser]);
 
   const courseLinks = courses.map(({ course }) => {
       return (
