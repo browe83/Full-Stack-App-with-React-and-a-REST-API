@@ -3,14 +3,14 @@ import { Context } from '../Context';
 
 function Header (props) {
     const context = useContext(Context);
-    const { isAuth, authUser } = context;
+    const { authUser } = context;
 
     return (
     <div className="header">
         <div className="bounds">
             <h1 className="header--logo"><a href="/">Courses</a></h1>
             <nav>
-                { isAuth ?
+                { authUser ?
                     <>
                         <span>Welcome, {authUser.firstName}!</span><a className="signout" href="/signout">Sign Out</a>
                     </>

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
+import { Context } from '../Context';
 
 function CourseDetail (props) {
   const [course, setCourse] = useState({});
   const history = useHistory();
+  const context = useContext(Context);
+  const { authUser } = context;
 
   useEffect(() => {
       fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`)
@@ -13,7 +16,7 @@ function CourseDetail (props) {
           history.push('/error');
         } else {
           setCourse(course);
-          console.log(course)
+          console.log(course);
         }
       });
   }, [props.match.params.id, history])
@@ -22,8 +25,14 @@ function CourseDetail (props) {
     <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100"><span><a className="button" href="courses/update">Update Course</a><a className="button" href="/courses/delete">Delete Course</a></span><a
-                className="button button-secondary" href="/">Return to List</a></div>
+            <div className="grid-100">
+            { (authUser && (course.userId === authUser.id)) &&
+                <span>
+                  <a className="button" href={`/courses/${props.match.params.id}/update`} >Update Course</a>
+                  <a className="button" href="/courses/delete">Delete Course</a>
+                </span>
+            }
+              <a className="button button-secondary" href="/">Return to List</a></div>
           </div>
         </div>
         <div className="bounds course--detail">

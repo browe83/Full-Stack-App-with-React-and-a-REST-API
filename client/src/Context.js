@@ -5,32 +5,21 @@ import Cookies from 'js-cookie';
 export const Context = React.createContext();
 
 function ContextProvider (props) {
-    const [ authUser, setAuthUser ] = useState(null);
-    const [ errors, setErrors ] = useState(null);
-    const [ isAuth, setIsAuth ] = useState(false);
-    const history = useHistory();
-
-    useEffect(() => {
-        getAuthUser();
-    }, []);
-
-    useEffect(() => {
-        if (authUser) {
-            setIsAuth(true);
-        } else {
-            setIsAuth(false);
-        }
-    }, [authUser]);
 
     const getAuthUser = () => {
         const authUser = Cookies.getJSON('authUser');
         if (authUser) {
-            setAuthUser(authUser);
             return authUser;
         } else {
             return null;
         }
     }
+    
+    const [ authUser, setAuthUser ] = useState(getAuthUser);
+    const [ errors, setErrors ] = useState(null);
+    const history = useHistory();
+
+
 
     const signIn = (emailAddress, password) => {
         setErrors([]);
@@ -49,7 +38,7 @@ function ContextProvider (props) {
                 const { user } = data;
                 user.password = password;
                 Cookies.set('authUser', JSON.stringify(user), { expires: 1 })
-                setAuthUser(Cookies.getJSON('authUser'));
+                setAuthUser(user);
                 history.push('/');
                 console.log(`successful log in for user: ${user.firstName}`);
             }
@@ -57,7 +46,7 @@ function ContextProvider (props) {
     }
 
     useEffect(() => {
-        console.log('context authUser:', authUser)
+        console.log('context authUser:', authUser);
     }, [authUser])
 
     const signOut = () => {
@@ -69,7 +58,6 @@ function ContextProvider (props) {
         <Context.Provider 
             value={{
                 authUser,
-                isAuth,
                 errors,
                 actions: {
                     signIn,

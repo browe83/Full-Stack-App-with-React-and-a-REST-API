@@ -11,13 +11,14 @@ import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
-import UserSignUp from './components/UserSIgnUp';
+import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import UserSignOut from './components/UserSignOut';
 import ContextProvider from './Context';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
 
 function App () {
   return (
@@ -32,6 +33,7 @@ function App () {
           <Route exact path='/signup' component={UserSignUp}></Route>
           <PrivateRoute exact path='/courses/:id/update' component={UpdateCourse}></PrivateRoute>
           <Route exact path='/signout' component={UserSignOut}></Route>
+          <Route exact path='/forbidden' component={Forbidden}></Route>
           <Route component={NotFound}></Route>
         </Switch>
       </ContextProvider>

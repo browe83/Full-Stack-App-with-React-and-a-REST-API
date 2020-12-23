@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from "react-router-dom";
+import { Context } from '../Context'; 
 
 function UpdateCourse (props) {
-    return (
+  const [course, setCourse ] = useState({});
+  const history = useHistory();
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [time, setTime] = useState('');
+  const [materials, setMaterials] = useState('');
+  const context = useContext(Context);
+  const { authUser } = context;
+
+  useEffect(() => {
+      fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`)
+      .then(response => response.json())
+      .then(({ course }) => {
+        if (course === null || course === undefined) {
+          history.push('/error');
+        } else {
+          setCourse(course);
+          console.log(course);
+          setTitle(course.title);
+          setDesc(course.description);
+          setMaterials(course.materialsNeeded);
+          setTime(course.estimatedTime);
+        }
+      });
+  }, [props.match.params.id, history, authUser.id])
+
+  return (
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
@@ -9,22 +37,12 @@ function UpdateCourse (props) {
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
-                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
-                    value="Build a Basic Bookcase"/></div>
-                <p>By Joe Smith</p>
+                <div><input onChange={(e) => setTitle(e.target.value)}id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
+                    value={title}/></div>
+                <p>{`By ${course.userFirstName} ${course.userLastName}`}</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" name="description" className="" placeholder="Course description...">High-end furniture projects are great to dream about. But unless you have a well-equipped shop and some serious woodworking experience to draw on, it can be difficult to turn the dream into a reality.
-
-Not every piece of furniture needs to be a museum showpiece, though. Often a simple design does the job just as well and the experience gained in completing it goes a long way toward making the next project even better.
-
-Our pine bookcase, for example, features simple construction and it's designed to be built with basic woodworking tools. Yet, the finished project is a worthy and useful addition to any room of the house. While it's meant to rest on the floor, you can convert the bookcase to a wall-mounted storage unit by leaving off the baseboard. You can secure the cabinet to the wall by screwing through the cabinet cleats into the wall studs.
-
-We made the case out of materials available at most building-supply dealers and lumberyards, including 1/2 x 3/4-in. parting strip, 1 x 2, 1 x 4 and 1 x 10 common pine and 1/4-in.-thick lauan plywood. Assembly is quick and easy with glue and nails, and when you're done with construction you have the option of a painted or clear finish.
-
-As for basic tools, you'll need a portable circular saw, hammer, block plane, combination square, tape measure, metal rule, two clamps, nail set and putty knife. Other supplies include glue, nails, sandpaper, wood filler and varnish or paint and shellac.
-
-The specifications that follow will produce a bookcase with overall dimensions of 10 3/4 in. deep x 34 in. wide x 48 in. tall. While the depth of the case is directly tied to the 1 x 10 stock, you can vary the height, width and shelf spacing to suit your needs. Keep in mind, though, that extending the width of the cabinet may require the addition of central shelf supports.</textarea></div>
+                <div><textarea id="description" onChange={(e) => setDesc(e.target.value)}name="description" className="" placeholder="Course description..." value={desc}></textarea></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -33,21 +51,11 @@ The specifications that follow will produce a bookcase with overall dimensions o
                   <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
                     <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
-                        placeholder="Hours" value="14 hours"/></div>
+                        placeholder="Hours" value={time}/></div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials...">* 1/2 x 3/4 inch parting strip
-* 1 x 2 common pine
-* 1 x 4 common pine
-* 1 x 10 common pine
-* 1/4 inch thick lauan plywood
-* Finishing Nails
-* Sandpaper
-* Wood Glue
-* Wood Filler
-* Minwax Oil Based Polyurethane
-</textarea></div>
+                    <div><textarea id="materialsNeeded" onChange={(e) => setMaterials(e.target.value)}name="materialsNeeded" className="" placeholder="List materials..." value={materials}></textarea></div>
                   </li>
                 </ul>
               </div>
