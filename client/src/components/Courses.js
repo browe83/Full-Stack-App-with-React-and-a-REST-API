@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Context } from '../Context';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 function Courses (props) {
   const [courses, setCourses ] = useState(null);
-  const context = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchCourses = () => {

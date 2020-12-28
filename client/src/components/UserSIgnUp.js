@@ -3,20 +3,38 @@ import { Context }  from '../Context';
 import { useHistory } from "react-router-dom";
 
 function UserSignUp (props) {
- 
-  const history = useHistory();
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
   const [ emailAddress, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ confirm, setConfirm ] = useState('');
-
+  const [errors, setErrors] = useState([]);
+  const history = useHistory();
   const context = useContext(Context);
+
+  function ErrorsDisplay ({ errors }) {
+      let errorsDisplay = null;
+
+      if (errors && errors.length) {
+        errorsDisplay = (
+          <div>
+            <h2 className="validation--errors--label">Validation errors</h2>
+            <div className="validation-errors">
+              <ul>
+                {errors.map((error, i) => <li key={i}>{error}</li>)}
+              </ul>
+            </div>
+          </div>
+        );
+    }
+
+    return errorsDisplay;
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (password !== confirm) {
-      console.log('Passwords do not match')
+      setErrors(['Passwords do not match.'])
     } else {
       console.log('maybe sucessful login');
       const body = {
@@ -25,27 +43,24 @@ function UserSignUp (props) {
         emailAddress,
         password
       }
-      // console.log(JSON.stringify(body));
-      // fetch(`http://127.0.0.1:5000/api/users/`, {
-      //      method: 'POST',
-      //      body: JSON.stringify(body),
-      //     }
-      //   )
-      
-        fetch('http://127.0.0.1:5000/api/users/', {
-          method: 'POST', // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-            // "Accept": "application/json",
-          },
-          body: JSON.stringify(body),
+      fetch('http://127.0.0.1:5000/api/users/', {
+        method: 'POST', 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
         })
+        .then(res => res.json())
         .then(res => {
-          console.log(res.status);
-          return res.json();
+          if (res.errors) {
+            console.log('response:', res.errors);
+            setErrors(res.errors);
+          } else {
+            console.log('successful sign up');
+            context.actions.signIn(emailAddress, password);
+            history.push('/');
+          }
         })
-        .then(data => console.log(data))
-      // context.actions.signIn(emailAddress, password);
     }
   }
   return (
@@ -53,6 +68,7 @@ function UserSignUp (props) {
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
           <div>
+            <ErrorsDisplay errors={errors}/>
             <form onSubmit={handleSubmit}>
               <div><input onChange={(e) => setFirstName(e.target.value)} id="firstName" name="firstName" type="text" className="" placeholder="First Name" value={firstName}/></div>
               <div><input onChange={(e) => setLastName(e.target.value)} id="lastName" name="lastName" type="text" className="" placeholder="Last Name" value={lastName}/></div>

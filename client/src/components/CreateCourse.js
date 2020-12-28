@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../Context'; 
 import base64 from 'base-64';
-import { Redirect } from 'react-router-dom';
+
 
 function CreateCourse (props) {
   const [title, setTitle] = useState('');

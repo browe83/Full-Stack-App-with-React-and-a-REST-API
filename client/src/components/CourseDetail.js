@@ -49,8 +49,8 @@ function CourseDetail (props) {
             { (authUser && (course.userId === authUser.id)) &&
                 <span>
                   <a className="button" href={`/courses/${props.match.params.id}/update`} >Update Course</a>
-                  {/* <a className="button" href="/courses/delete">Delete Course</a> */}
-                  <a className="button" onClick={handleDelete}>Delete Course</a>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
+                  <a className="button" onClick={handleDelete} >Delete Course</a>
                 </span>
             }
               <a className="button button-secondary" href="/">Return to List</a></div>

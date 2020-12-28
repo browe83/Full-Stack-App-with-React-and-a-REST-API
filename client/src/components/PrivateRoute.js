@@ -24,6 +24,7 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
   
   useEffect(() => {
     fetchCourse();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
