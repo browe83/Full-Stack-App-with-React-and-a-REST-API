@@ -1,18 +1,38 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../Context';
+import { Redirect } from 'react-router-dom';
 
 function Courses (props) {
-  const [courses, setCourses ] = useState([]);
+  const [courses, setCourses ] = useState(null);
   const context = useContext(Context);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchCourses = () => {
     fetch('http://127.0.0.1:5000/api/courses')
       .then(response => response.json())
       .then(data => {
         setCourses(data.filteredCoursesInfo);
-        console.log('this ran')
       });
-  }, []);
+  }
+
+  useEffect(() => {
+    fetchCourses();
+  }, [])
+
+  useEffect(() => {
+    if (courses) {
+      console.log('courses listing:', courses);
+      setIsLoading(false);
+    }
+  }, [courses])
+
+  // useEffect(() => {
+  //   fetch('http://127.0.0.1:5000/api/courses')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setCourses(data.filteredCoursesInfo);
+  //     });
+  // }, [setCourses]);
 
   const courseLinks = () => courses.map(({ course }) => {
       return (
@@ -23,15 +43,20 @@ function Courses (props) {
       );
   })
     return (
-        <div className="bounds">
-            {courseLinks()}
-            <div className="grid-33"><a className="course--module course--add--module" href="/courses/create">
-                <h3 className="course--add--title"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                    viewBox="0 0 13 13" className="add">
-                    <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
-                </svg>New Course</h3>
-            </a></div>
-        </div>
+      <>
+        { !isLoading && (
+            <div className="bounds">
+              {courseLinks()}
+              <div className="grid-33"><a className="course--module course--add--module" href="/courses/create">
+                  <h3 className="course--add--title"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                      viewBox="0 0 13 13" className="add">
+                      <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
+                  </svg>New Course</h3>
+              </a></div>
+            </div>
+        )
+        }
+      </>  
     );
 };
 

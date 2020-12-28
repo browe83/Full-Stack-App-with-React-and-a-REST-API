@@ -27,8 +27,8 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
   }, []);
 
   useEffect(() => {
-    if (course) setIsLoading(false)
-  }, [course]);
+    if (course || !courseId) setIsLoading(false)
+  }, [course, courseId]);
 
 
   return (

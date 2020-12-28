@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../Context'; 
 import base64 from 'base-64';
+import { Redirect } from 'react-router-dom';
 
 function CreateCourse (props) {
   const [title, setTitle] = useState('');
@@ -51,7 +52,7 @@ function CreateCourse (props) {
           }),
           body: JSON.stringify(body),
       })
-      .then (res => res.json())
+      // .then (res => res.text())
       .then(res => {
         if (res.status !== 201) {
           setErrors(res.errors);
