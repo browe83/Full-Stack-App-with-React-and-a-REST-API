@@ -12,6 +12,7 @@ router
     console.log('request obj:', req);
     res.status(200).json({
       user: {
+        id: req.currentUser.id,
         firstName: req.currentUser.firstName,
         lastName: req.currentUser.lastName,
         emailAddress: req.currentUser.emailAddress,
@@ -20,8 +21,9 @@ router
   }))
   .post('/', asyncHandler(async (req, res) => {
     try {
+      console.log('Body:', req.body);
       await User.create(req.body);
-      res.redirect(201, '/');
+      res.status(201).send({});
     } catch (error) {
       if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
         const errors = error.errors.map((err) => err.message);
