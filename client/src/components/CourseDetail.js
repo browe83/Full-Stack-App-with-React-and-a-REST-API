@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../Context';
+import base64 from 'base-64';
 
 function CourseDetail (props) {
   const [course, setCourse] = useState({});
@@ -16,10 +17,29 @@ function CourseDetail (props) {
           history.push('/error');
         } else {
           setCourse(course);
-          console.log(course);
         }
       });
   }, [props.match.params.id, history])
+
+  function handleDelete(e) {
+    // eslint-disable-next-line no-restricted-globals
+    const confirmDelete = confirm('Are you sure you want to delete this course?');
+    if (confirmDelete) {
+      fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`, {
+        method: 'DELETE',
+        headers: new Headers ({
+          "Authorization": `Basic ${base64.encode(`${authUser.emailAddress}:${authUser.password}`)}`,
+          "Content-Type": "application/json",
+        }),
+      })
+      .then(res => res.text())
+      .then(res => console.log(res));
+      history.push('/');
+    } else{
+      console.log('false')
+    }
+    
+  }
 
   return (
     <div>
@@ -29,7 +49,8 @@ function CourseDetail (props) {
             { (authUser && (course.userId === authUser.id)) &&
                 <span>
                   <a className="button" href={`/courses/${props.match.params.id}/update`} >Update Course</a>
-                  <a className="button" href="/courses/delete">Delete Course</a>
+                  {/* <a className="button" href="/courses/delete">Delete Course</a> */}
+                  <a className="button" onClick={handleDelete}>Delete Course</a>
                 </span>
             }
               <a className="button button-secondary" href="/">Return to List</a></div>
@@ -56,7 +77,7 @@ function CourseDetail (props) {
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    {course.materialsNeeded ? <li>{course.materialsNeeded}</li>  : <li>No materials required</li>}
+                    {(course.materialsNeeded > 1) ? <li>{course.materialsNeeded}</li>  : <li>No materials required</li>}
                   </ul>
                 </li>
               </ul>

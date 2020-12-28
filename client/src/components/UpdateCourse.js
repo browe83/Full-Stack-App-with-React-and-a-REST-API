@@ -1,14 +1,35 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../Context'; 
+import base64 from 'base-64';
+
+function ErrorsDisplay ({ errors }) {
+  let errorsDisplay = null;
+
+  if (errors && errors.length) {
+    errorsDisplay = (
+      <div>
+        <h2 className="validation--errors--label">Validation errors</h2>
+        <div className="validation-errors">
+          <ul>
+            {errors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
+  return errorsDisplay;
+}
 
 function UpdateCourse (props) {
   const [course, setCourse ] = useState({});
   const history = useHistory();
   const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [time, setTime] = useState('');
-  const [materials, setMaterials] = useState('');
+  const [description, setDesc] = useState('');
+  const [estimatedTime, setTime] = useState('');
+  const [materialsNeeded, setMaterials] = useState('');
+  const [errors, setErrors] = useState([]);
   const context = useContext(Context);
   const { authUser } = context;
 
@@ -20,7 +41,6 @@ function UpdateCourse (props) {
           history.push('/error');
         } else {
           setCourse(course);
-          console.log(course);
           setTitle(course.title);
           setDesc(course.description);
           setMaterials(course.materialsNeeded);
@@ -29,20 +49,50 @@ function UpdateCourse (props) {
       });
   }, [props.match.params.id, history, authUser.id])
 
+   function handleSubmit (e) {
+      e.preventDefault();
+      setErrors([]);
+      const body = {
+        title,
+        description,
+        materialsNeeded,
+        estimatedTime
+      }
+      fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`, {
+          method: 'PUT',
+          headers: new Headers({
+              "Authorization": `Basic ${base64.encode(`${authUser.emailAddress}:${authUser.password}`)}`,
+              "Content-Type": "application/json",
+          }),
+          body: JSON.stringify(body),
+      })
+      // .then (res => res.json())
+      .then(res => {
+        if (res.status !== 204) {
+          setErrors(['Please provide a valid title and/or description']);
+          console.log('error response:', res);
+        } else {
+          console.log('response status:', res.status);
+          history.push(`/courses/${props.match.params.id}`);
+        }
+      })
+    }
+
   return (
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
+                <ErrorsDisplay errors={errors}/>
                 <div><input onChange={(e) => setTitle(e.target.value)}id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
                     value={title}/></div>
                 <p>{`By ${course.userFirstName} ${course.userLastName}`}</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" onChange={(e) => setDesc(e.target.value)}name="description" className="" placeholder="Course description..." value={desc}></textarea></div>
+                <div><textarea id="description" onChange={(e) => setDesc(e.target.value)}name="description" className="" placeholder="Course description..." value={description}></textarea></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -50,17 +100,17 @@ function UpdateCourse (props) {
                 <ul className="course--stats--list">
                   <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
-                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
-                        placeholder="Hours" value={time}/></div>
+                    <div><input  onChange={(e) => setTime(e.target.value)}id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
+                        placeholder="Hours" value={estimatedTime}/></div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" onChange={(e) => setMaterials(e.target.value)}name="materialsNeeded" className="" placeholder="List materials..." value={materials}></textarea></div>
+                    <div><textarea id="materialsNeeded" onChange={(e) => setMaterials(e.target.value)}name="materialsNeeded" className="" placeholder="List materials..." value={materialsNeeded}></textarea></div>
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div>
+            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={() => history.push('/')}>Cancel</button></div>
           </form>
         </div>
       </div>

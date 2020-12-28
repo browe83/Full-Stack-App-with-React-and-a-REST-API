@@ -9,11 +9,12 @@ function Courses (props) {
     fetch('http://127.0.0.1:5000/api/courses')
       .then(response => response.json())
       .then(data => {
-        setCourses(data.filteredCoursesInfo); 
+        setCourses(data.filteredCoursesInfo);
+        console.log('this ran')
       });
   }, []);
 
-  const courseLinks = courses.map(({ course }) => {
+  const courseLinks = () => courses.map(({ course }) => {
       return (
             <div key={course.id} className="grid-33"><a className="course--module course--link" href={`/courses/${course.id}`}>
                 <h4 className="course--label">Course</h4>
@@ -23,7 +24,7 @@ function Courses (props) {
   })
     return (
         <div className="bounds">
-            {courseLinks}
+            {courseLinks()}
             <div className="grid-33"><a className="course--module course--add--module" href="/courses/create">
                 <h3 className="course--add--title"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                     viewBox="0 0 13 13" className="add">

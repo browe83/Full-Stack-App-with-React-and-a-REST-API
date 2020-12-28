@@ -23,7 +23,6 @@ function ContextProvider (props) {
 
     const signIn = (emailAddress, password) => {
         setErrors([]);
-        console.log('email:', emailAddress, 'password:', password);
         fetch(`http://127.0.0.1:5000/api/users/`, {
             headers: new Headers({
                 "Authorization": `Basic ${base64.encode(`${emailAddress}:${password}`)}`,
