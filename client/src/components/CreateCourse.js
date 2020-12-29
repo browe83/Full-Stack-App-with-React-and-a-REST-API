@@ -62,9 +62,7 @@ function CreateCourse (props) {
       .then(res => {
         if (res.errors) {
           setErrors(res.errors);
-          console.log('error response:', res);
         } else {
-          console.log('response:', res);
           history.push(`/`);
         }
       })

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../Context';
 import base64 from 'base-64';
+import ReactMarkdown from "react-markdown";
 
 function CourseDetail (props) {
   const [course, setCourse] = useState({});
@@ -35,11 +36,7 @@ function CourseDetail (props) {
       .then(res => {
         history.push('/');
       })
-      
-    } else{
-      console.log('false')
-    }
-    
+    } 
   }
 
   return (
@@ -73,12 +70,12 @@ function CourseDetail (props) {
               <ul className="course--stats--list">
                 <li className="course--stats--list--item">
                   <h4>Estimated Time</h4>
-                  <h3>{course.estimatedTime ? course.estimatedTime : 'No estimate available'}</h3>
+                  <h3>{course.estimatedTime ? <ReactMarkdown source={course.estimatedTime}/> : 'No estimate available'}</h3>
                 </li>
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    {(course.materialsNeeded > 1) ? <li>{course.materialsNeeded}</li>  : <li>No materials required</li>}
+                    {(course.materialsNeeded) ? <ReactMarkdown source={course.materialsNeeded}/> : <li>No materials required</li>}
                   </ul>
                 </li>
               </ul>

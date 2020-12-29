@@ -37,8 +37,6 @@ function UserSignIn (props) {
       context.actions.signIn(email, password);
     }
 
-    // console.log('location:', props.location.state.from);
- 
     return (
       <>
         <div className="bounds">

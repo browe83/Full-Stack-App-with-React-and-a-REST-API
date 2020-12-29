@@ -4,7 +4,6 @@ import { Context } from '../Context';
 
 function UserSignOut (props) {
     const context = useContext(Context);
-    console.log(context);
     
     useEffect(() => {
       context.actions.signOut();

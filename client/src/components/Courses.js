@@ -18,7 +18,6 @@ function Courses (props) {
 
   useEffect(() => {
     if (courses) {
-      console.log('courses listing:', courses);
       setIsLoading(false);
     }
   }, [courses])

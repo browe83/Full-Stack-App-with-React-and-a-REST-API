@@ -70,9 +70,7 @@ function UpdateCourse (props) {
       .then(res => {
         if (res.status !== 204) {
           setErrors(['Please provide a valid title and/or description']);
-          console.log('error response:', res);
         } else {
-          console.log('response status:', res.status);
           history.push(`/courses/${props.match.params.id}`);
         }
       })

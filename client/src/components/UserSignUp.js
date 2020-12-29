@@ -36,7 +36,6 @@ function UserSignUp (props) {
     if (password !== confirm) {
       setErrors(['Passwords do not match.'])
     } else {
-      console.log('maybe sucessful login');
       const body = {
         firstName,
         lastName,
@@ -53,10 +52,8 @@ function UserSignUp (props) {
         .then(res => res.json())
         .then(res => {
           if (res.errors) {
-            console.log('response:', res.errors);
             setErrors(res.errors);
           } else {
-            console.log('successful sign up');
             context.actions.signIn(emailAddress, password);
             history.push('/');
           }

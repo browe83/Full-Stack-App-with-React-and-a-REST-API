@@ -14,7 +14,6 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
       .then(response => response.json())
       .then(res => {
         const course = res.course;
-        console.log(course);
         setCourse(course);
       })
    
