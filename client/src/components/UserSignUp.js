@@ -3,7 +3,6 @@ import { Context }  from '../Context';
 import { useHistory } from "react-router-dom";
 
 function UserSignUp (props) {
-  const test =  1;
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
   const [ emailAddress, setEmail ] = useState('');

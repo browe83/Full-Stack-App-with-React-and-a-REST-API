@@ -52,9 +52,15 @@ function CreateCourse (props) {
           }),
           body: JSON.stringify(body),
       })
-      // .then (res => res.text())
       .then(res => {
         if (res.status !== 201) {
+          return res.json();
+        } else {
+          return res.text();
+        }
+      })
+      .then(res => {
+        if (res.errors) {
           setErrors(res.errors);
           console.log('error response:', res);
         } else {
