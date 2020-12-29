@@ -7,13 +7,11 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
   const [course, setCourse] = useState(null);
   const context = useContext(Context);
   const { authUser } = context;
-  const courseId  = Number(rest.computedMatch.params.id);
-  console.log('courseId:', courseId, 'authUser:', authUser);
+  const courseId  = Number(rest.computedMatch.params.id) || null;
 
   const fetchCourse = () => {
       fetch(`http://127.0.0.1:5000/api/courses/${courseId}`)
       .then(response => response.json())
-      // .then(res => console.log('course response:', res))
       .then(res => {
         const course = res.course;
         console.log(course);
@@ -23,7 +21,7 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
   }
   
   useEffect(() => {
-    fetchCourse();
+    if (courseId) fetchCourse();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

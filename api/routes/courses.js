@@ -113,8 +113,9 @@ router
     } else if (req.currentUser.id !== course.userId) {
       return res.sendStatus(403);
     } else {
-      await course.destroy(req.body);
-      return res.sendStatus(204);
+      const courseDestroyed = await course.destroy(req.body);
+      console.log(courseDestroyed);
+      res.status(204).send(courseDestroyed);
     }
   }));
 

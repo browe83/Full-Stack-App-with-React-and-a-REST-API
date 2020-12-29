@@ -32,9 +32,11 @@ function CourseDetail (props) {
           "Content-Type": "application/json",
         }),
       })
-      .then(res => res.text())
-      .then(res => console.log(res));
-      history.push('/');
+      .then(res => {
+        console.log('course deleted:', res);
+        history.push('/');
+      })
+      
     } else{
       console.log('false')
     }

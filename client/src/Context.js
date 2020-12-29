@@ -30,7 +30,6 @@ function ContextProvider (props) {
         })
         .then (res => res.json())
         .then(data => {
-        
             if (data.message) {
                 setErrors(['Incorrect username and/or password.'])
             } else {
