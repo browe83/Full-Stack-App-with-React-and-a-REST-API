@@ -33,7 +33,6 @@ function CourseDetail (props) {
         }),
       })
       .then(res => {
-        console.log('course deleted:', res);
         history.push('/');
       })
       
