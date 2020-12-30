@@ -37,16 +37,12 @@ function UpdateCourse (props) {
       fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`)
       .then(response => response.json())
       .then(({ course }) => {
-        if (course === null || course === undefined) {
-          history.push('/error');
-        } else {
           setCourse(course);
           setTitle(course.title);
           setDesc(course.description);
           setMaterials(course.materialsNeeded);
           setTime(course.estimatedTime);
-        }
-      });
+        });
   }, [props.match.params.id, history, authUser.id])
 
    function handleSubmit (e) {

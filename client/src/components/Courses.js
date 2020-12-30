@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Courses (props) {
   const [courses, setCourses ] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const history = useHistory();
 
   const fetchCourses = () => {
     fetch('http://127.0.0.1:5000/api/courses')
       .then(response => response.json())
-      .then(data => {
-        setCourses(data.filteredCoursesInfo);
+      .then(({status, filteredCoursesInfo }) => {
+         if (status === 500) {
+          history.push('/error');
+        } else if (status === 404) {
+          history.push('/notfound');
+        } else {
+          setCourses(filteredCoursesInfo);
+        }
       });
   }
 

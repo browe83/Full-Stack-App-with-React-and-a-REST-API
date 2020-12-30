@@ -15,7 +15,8 @@ function ContextProvider (props) {
         }
     }
     
-    const [ authUser, setAuthUser ] = useState(getAuthUser);
+    const [ authUser, setAuthUser ] = useState(Cookies.getJSON('authUser'));
+    // const [ authUser, setAuthUser ] = useState(getAuthUser);
     const [ errors, setErrors ] = useState(null);
     const history = useHistory();
 
@@ -30,8 +31,11 @@ function ContextProvider (props) {
         })
         .then (res => res.json())
         .then(data => {
-            if (data.message) {
+            console.log('data', data);
+            if (data.status === 401) {
                 setErrors(['Incorrect username and/or password.'])
+            } else if (data.status === 500) {
+                setErrors(['Sorry, our server is experiencing problems. Please try back again soon.'])
             } else {
                 const { user } = data;
                 user.password = password;

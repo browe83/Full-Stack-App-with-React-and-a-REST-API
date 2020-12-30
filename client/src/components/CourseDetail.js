@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 import base64 from 'base-64';
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from 'react-markdown';
 
 function CourseDetail (props) {
   const [course, setCourse] = useState({});
@@ -12,10 +12,12 @@ function CourseDetail (props) {
 
   useEffect(() => {
       fetch(`http://127.0.0.1:5000/api/courses/${props.match.params.id}`)
-      .then(response => response.json())
-      .then(({ course }) => {
-        if (course === null || course === undefined) {
+      .then(res =>  res.json())
+      .then(({ course, status }) => {
+        if (status === 500) {
           history.push('/error');
+        } else if (status === 404) {
+          history.push('/notfound');
         } else {
           setCourse(course);
         }

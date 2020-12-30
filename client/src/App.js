@@ -19,6 +19,7 @@ import ContextProvider from './Context';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './components/NotFound';
 import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
 
 function App () {
   return (
@@ -34,6 +35,8 @@ function App () {
           <PrivateRoute exact path='/courses/:id/update' component={UpdateCourse}></PrivateRoute>
           <Route exact path='/signout' component={UserSignOut}></Route>
           <Route exact path='/forbidden' component={Forbidden}></Route>
+          <Route exact path='/error' component={UnhandledError}></Route>
+          <Route path='/notfound' component={NotFound}></Route>
           <Route component={NotFound}></Route>
         </Switch>
       </ContextProvider>

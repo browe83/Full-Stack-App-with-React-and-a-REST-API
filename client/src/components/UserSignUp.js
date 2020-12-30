@@ -51,7 +51,9 @@ function UserSignUp (props) {
         })
         .then(res => res.json())
         .then(res => {
-          if (res.errors) {
+          if (res.status === 500) {
+            setErrors(['Sorry, our server is out to lunch.  Please try again later.'])
+          } else if (res.errors) {
             setErrors(res.errors);
           } else {
             context.actions.signIn(emailAddress, password);

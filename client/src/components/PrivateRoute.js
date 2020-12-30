@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 import { Context } from '../Context';  
 
 export default function PrivateRoute ({ component: Component, path, ...rest }) {
@@ -8,13 +8,21 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
   const context = useContext(Context);
   const { authUser } = context;
   const courseId  = Number(rest.computedMatch.params.id) || null;
+  const history = useHistory();
 
   const fetchCourse = () => {
       fetch(`http://127.0.0.1:5000/api/courses/${courseId}`)
       .then(response => response.json())
       .then(res => {
-        const course = res.course;
-        setCourse(course);
+        console.log('resolve', res);
+        if (res.status === 404) {
+          history.push('/notfound');
+        } else if (res.status === 500) {
+          history.push('/error');
+        } else {
+          const course = res.course;
+          setCourse(course);
+        }
       })
    
   }
@@ -39,7 +47,6 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
               ) : (
                   <Redirect to={{
                   pathname: '/forbidden',
-                  // state: { from: props.location },
               }} />
               )
           }

@@ -9,7 +9,6 @@ const { authenticateUser } = require('../middleware/auth-user');
 router
 // GET a current user.
   .get('/', authenticateUser, asyncHandler(async (req, res) => {
-    console.log('request obj:', req);
     res.status(200).json({
       user: {
         id: req.currentUser.id,
@@ -21,7 +20,6 @@ router
   }))
   .post('/', asyncHandler(async (req, res) => {
     try {
-      console.log('Body:', req.body);
       await User.create(req.body);
       res.status(201).send({});
     } catch (error) {

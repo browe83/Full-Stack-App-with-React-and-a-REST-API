@@ -44,7 +44,6 @@ function CreateCourse (props) {
         estimatedTime
       }
       fetch(`http://127.0.0.1:5000/api/courses/`, {
-          crossDomain:true,
           method: 'POST',
           headers: new Headers({
               "Authorization": `Basic ${base64.encode(`${authUser.emailAddress}:${authUser.password}`)}`,

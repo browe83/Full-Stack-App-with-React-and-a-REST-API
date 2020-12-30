@@ -114,7 +114,6 @@ router
       return res.sendStatus(403);
     } else {
       const courseDestroyed = await course.destroy(req.body);
-      console.log(courseDestroyed);
       res.status(204).send(courseDestroyed);
     }
   }));
