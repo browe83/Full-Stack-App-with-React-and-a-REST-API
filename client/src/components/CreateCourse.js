@@ -52,6 +52,7 @@ function CreateCourse (props) {
           body: JSON.stringify(body),
       })
       .then(res => {
+        // redirect from the api server is text. otherwise, the response is formatted as JSON.
         if (res.status !== 201) {
           return res.json();
         } else {

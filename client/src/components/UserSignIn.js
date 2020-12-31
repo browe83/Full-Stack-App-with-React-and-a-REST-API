@@ -21,6 +21,7 @@ function ErrorsDisplay ({ errors }) {
   return errorsDisplay;
 }
 
+//UserSignIn component is reponsible for logging an existing user in and providing password and username validation.
 function UserSignIn (props) {
     const history = useHistory();
     const [ email, setEmail ] = useState('');

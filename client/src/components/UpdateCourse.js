@@ -21,7 +21,7 @@ function ErrorsDisplay ({ errors }) {
 
   return errorsDisplay;
 }
-
+// UpdateCourse is responsible for updating course information. It handles validation errors of course details.  
 function UpdateCourse (props) {
   const [course, setCourse ] = useState({});
   const history = useHistory();
@@ -62,7 +62,6 @@ function UpdateCourse (props) {
           }),
           body: JSON.stringify(body),
       })
-      // .then (res => res.json())
       .then(res => {
         if (res.status !== 204) {
           setErrors(['Please provide a valid title and/or description']);

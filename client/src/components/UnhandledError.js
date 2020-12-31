@@ -1,5 +1,6 @@
 import React from 'react';
 
+//The UnhandledError compenonet renders with the /error route is accessed due to a 500 server response.
 export default function  UnhandledError (props) {
   return (
     <div className="bounds">

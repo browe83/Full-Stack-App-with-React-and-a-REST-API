@@ -27,12 +27,13 @@ function App () {
       <ContextProvider>
           <Header />
         <Switch>
-          <Route exact path='/' component={Courses}></Route>
+          {/* Private routes are protected to ensure only authenticated users can update and delete their own courses*/}
           <PrivateRoute exact path='/courses/create' component={CreateCourse}></PrivateRoute>
+          <PrivateRoute exact path='/courses/:id/update' component={UpdateCourse}></PrivateRoute>
+          <Route exact path='/' component={Courses}></Route>
           <Route exact path='/courses/:id' component={CourseDetail}></Route>
           <Route exact path='/signin' component={UserSignIn}></Route>
           <Route exact path='/signup' component={UserSignUp}></Route>
-          <PrivateRoute exact path='/courses/:id/update' component={UpdateCourse}></PrivateRoute>
           <Route exact path='/signout' component={UserSignOut}></Route>
           <Route exact path='/forbidden' component={Forbidden}></Route>
           <Route exact path='/error' component={UnhandledError}></Route>

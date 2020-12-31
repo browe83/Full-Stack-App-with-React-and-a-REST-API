@@ -30,14 +30,6 @@ function Courses (props) {
     }
   }, [courses])
 
-  // useEffect(() => {
-  //   fetch('http://127.0.0.1:5000/api/courses')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       setCourses(data.filteredCoursesInfo);
-  //     });
-  // }, [setCourses]);
-
   const courseLinks = () => courses.map(({ course }) => {
       return (
             <div key={course.id} className="grid-33"><a className="course--module course--link" href={`/courses/${course.id}`}>

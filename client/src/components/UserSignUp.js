@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Context }  from '../Context';
 import { useHistory } from "react-router-dom";
 
+//The UserSignUp component is responsible for signing a new user up and providing validation errors for user information.
 function UserSignUp (props) {
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');

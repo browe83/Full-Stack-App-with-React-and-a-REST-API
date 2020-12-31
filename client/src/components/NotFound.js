@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Not found component is rendered whenever user attempts to access a non-existent course or route.
 export default function  NotFound (props) {
   return (
     <div className="bounds">

@@ -31,7 +31,6 @@ function ContextProvider (props) {
         })
         .then (res => res.json())
         .then(data => {
-            console.log('data', data);
             if (data.status === 401) {
                 setErrors(['Incorrect username and/or password.'])
             } else if (data.status === 500) {
@@ -42,14 +41,9 @@ function ContextProvider (props) {
                 Cookies.set('authUser', JSON.stringify(user), { expires: 1 })
                 setAuthUser(user);
                 history.push('/');
-                console.log(`successful log in for user: ${user.firstName}`);
             }
         })
     }
-
-    useEffect(() => {
-        console.log('context authUser:', authUser);
-    }, [authUser])
 
     const signOut = () => {
         setAuthUser(null);

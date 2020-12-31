@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Route, Redirect, useHistory } from 'react-router-dom';
 import { Context } from '../Context';  
 
+// The PrivateRoute component conditionally renders the UpdateCourse, CreateCourse or Foribidden Components depending on the user's authorization and authentication.
 export default function PrivateRoute ({ component: Component, path, ...rest }) {
   const [isLoading, setIsLoading] = useState(true); 
   const [course, setCourse] = useState(null);
@@ -14,7 +15,6 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
       fetch(`http://127.0.0.1:5000/api/courses/${courseId}`)
       .then(response => response.json())
       .then(res => {
-        console.log('resolve', res);
         if (res.status === 404) {
           history.push('/notfound');
         } else if (res.status === 500) {
