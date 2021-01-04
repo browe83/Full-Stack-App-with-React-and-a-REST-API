@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../Context';
+import { Link } from 'react-router-dom';
 
 function Header (props) {
     const context = useContext(Context);
@@ -12,11 +13,11 @@ function Header (props) {
             <nav>
                 { authUser ?
                     <>
-                        <span>Welcome, {authUser.firstName}!</span><a className="signout" href="/signout">Sign Out</a>
+                        <span>Welcome, {authUser.firstName}!</span><Link className="signout" to={{pathname: "/signout", state: { from: window.location.pathname}}}>Sign Out</Link>
                     </>
                     :
                     <>
-                        <a className="signup" href="/signup">Sign Up</a><a className="/signin" href="/signin">Sign In</a>
+                        <Link className="signup" to={{pathname: "/signup", state: { from: window.location.pathname}}}>Sign Up</Link><Link className="/signin" to={{pathname: "/signin", state: { from: window.location.pathname}}}>Sign In</Link>
                     </>
                 }
             </nav>

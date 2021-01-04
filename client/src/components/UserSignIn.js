@@ -28,14 +28,16 @@ function UserSignIn (props) {
     const [ password, setPass ] = useState('');
     const context = useContext(Context);
     
+    console.log('history:', history);
     function handleCancel (e) {
         e.preventDefault();
         history.push('/')
     }
-
+    console.log('props:', props);
     function handleSubmit (e) {
       e.preventDefault();
-      context.actions.signIn(email, password);
+      const { from } = props.location.state;
+      context.actions.signIn(email, password, from);
     }
 
     return (

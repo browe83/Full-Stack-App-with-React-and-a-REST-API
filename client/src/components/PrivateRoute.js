@@ -42,7 +42,7 @@ export default function PrivateRoute ({ component: Component, path, ...rest }) {
       { !isLoading &&  (
         <Route
           {...rest}
-              render={props => ((courseId && authUser !== null && authUser.id === course.userId) || (!courseId && authUser)) ? (
+              render={props => ((courseId && authUser && authUser.id === course.userId) || (!courseId && authUser)) ? (
                   <Component {...props} />
               ) : (
                   <Redirect to={{

@@ -22,7 +22,8 @@ function ContextProvider (props) {
 
 
 
-    const signIn = (emailAddress, password) => {
+    const signIn = (emailAddress, password, from) => {
+        console.log('from:', from);
         setErrors([]);
         fetch(`http://127.0.0.1:5000/api/users/`, {
             headers: new Headers({
@@ -40,7 +41,12 @@ function ContextProvider (props) {
                 user.password = password;
                 Cookies.set('authUser', JSON.stringify(user), { expires: 1 })
                 setAuthUser(user);
-                history.push('/');
+
+                if (from === '/forbidden') {
+                  history.go(-2);
+                } else {
+                  history.push(from ? from : '/');
+                }
             }
         })
     }
