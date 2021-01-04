@@ -4,6 +4,7 @@ import { Context } from '../Context';
 import base64 from 'base-64';
 import ReactMarkdown from 'react-markdown';
 
+//CourseDetail component is responsible for displaying information for individual course.
 function CourseDetail (props) {
   const [course, setCourse] = useState({});
   const history = useHistory();

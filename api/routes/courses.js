@@ -58,14 +58,12 @@ router
   }))
 // POST creates a new course
   .post('/', authenticateUser, asyncHandler(async (req, res) => {
-    console.log('request body:', req.body);
     try {
       const course = await Course.create(req.body);
       res.redirect(201, `/courses/${course.id}`);
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const errors = error.errors.map((err) => err.message);
-        console.log('errors:', errors);
         res.status(400).json({ errors });
       } else {
         throw error;
@@ -75,7 +73,6 @@ router
 // PUT updates a course with id
   .put('/:id', authenticateUser, asyncHandler(async (req, res) => {
     try {
-      console.log('req.body:', req.body);
       const course = await Course.findByPk(req.params.id);
       const { title } = req.body;
       const { description } = req.body;
@@ -114,7 +111,7 @@ router
       return res.sendStatus(403);
     } else {
       const courseDestroyed = await course.destroy(req.body);
-      res.status(204).send(courseDestroyed);
+      return res.status(204).send(courseDestroyed);
     }
   }));
 

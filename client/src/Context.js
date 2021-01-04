@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import base64 from 'base-64';
 import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
@@ -23,7 +23,6 @@ function ContextProvider (props) {
 
 
     const signIn = (emailAddress, password, from) => {
-        console.log('from:', from);
         setErrors([]);
         fetch(`http://127.0.0.1:5000/api/users/`, {
             headers: new Headers({

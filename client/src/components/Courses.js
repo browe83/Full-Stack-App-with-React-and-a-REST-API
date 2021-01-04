@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+// Courses component is responsible for displaying a list of all current courses.
 function Courses (props) {
   const [courses, setCourses ] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,7 @@ function Courses (props) {
 
   useEffect(() => {
     fetchCourses();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

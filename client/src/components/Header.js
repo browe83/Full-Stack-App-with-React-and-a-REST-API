@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from '../Context';
 import { Link } from 'react-router-dom';
 
+//Header component conditionally renders differently depending on whether the user is signed in or not.
 function Header (props) {
     const context = useContext(Context);
     const { authUser } = context;

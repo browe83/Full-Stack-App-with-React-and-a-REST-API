@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Context } from '../Context'; 
 import base64 from 'base-64';
 
-
+// CreateCourse component is responsible for creating a new course and is only available to authenticated users.
 function CreateCourse (props) {
   const [title, setTitle] = useState('');
   const [description, setDesc] = useState('');
