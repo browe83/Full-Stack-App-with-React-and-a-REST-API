@@ -63,6 +63,11 @@ function UserSignUp (props) {
         })
     }
   }
+   function handleCancel (e) {
+        e.preventDefault();
+        history.push('/')
+    }
+    
   return (
       <div className="bounds">
         <div className="grid-33 centered signin">
@@ -76,7 +81,7 @@ function UserSignUp (props) {
               <div><input onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" className="" placeholder="Password" value={password}/></div>
               <div><input onChange={(e) => setConfirm(e.target.value)} id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password"
                   value={confirm}/></div>
-              <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><button className="button button-secondary" onClick={context.actions.signIn}>Cancel</button></div>
+              <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button></div>
             </form>
           </div>
           <p>&nbsp;</p>

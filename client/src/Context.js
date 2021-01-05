@@ -40,7 +40,7 @@ function ContextProvider (props) {
                 user.password = password;
                 Cookies.set('authUser', JSON.stringify(user), { expires: 1 })
                 setAuthUser(user);
-
+        
                 if (from === '/forbidden') {
                   history.go(-2);
                 } else {

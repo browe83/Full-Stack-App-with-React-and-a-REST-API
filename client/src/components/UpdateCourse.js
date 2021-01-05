@@ -103,7 +103,7 @@ function UpdateCourse (props) {
                 </ul>
               </div>
             </div>
-            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={() => history.push('/')}>Cancel</button></div>
+            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={() => history.push(`/courses/${props.match.params.id}`)}>Cancel</button></div>
           </form>
         </div>
       </div>
