@@ -35,7 +35,7 @@ function UserSignIn (props) {
 
     function handleSubmit (e) {
       e.preventDefault();
-      const { from } = props.location.state || null;
+      const { from } = props.location.state || {from: '/'};
       context.actions.signIn(email, password, from);
     }
 
