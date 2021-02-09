@@ -17,5 +17,17 @@ This project creates a full stack application with a React front-end and a RESTf
 * Bycrypt
 
 ## Installation
-After cloning repository, notice the two directories in the root folder: `api` and `client`.  For both, you will need to run `npm install`.  Then, for the `api`,
-run `npm run seed` to create initial data.  Lastly, run `npm start` in separate terminals for both the `api` and `client` directories.
+```shell
+$ git clone https://github.com/browe83/Full-Stack-App-with-React-and-a-REST-API.git
+$ cd Full-Stack-App-with-React-and-a-REST-API
+$ cd client
+$ npm install
+$ npm start
+```
+In a different terminal:
+```shell
+$ cd Full-Stack-App-with-React-and-a-REST-API/api
+$ npm install
+$ npm run seed
+$ npm start
+```
